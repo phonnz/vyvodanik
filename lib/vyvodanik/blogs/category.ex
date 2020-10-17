@@ -5,6 +5,7 @@ defmodule Vyvodanik.Blogs.Category do
   alias Vyvodanik.Blogs.Entry
 
   @primary_key {:id, :binary_id, primary_key: true}
+  @foreign_key_type :binary_id
   schema "categories" do
     field :name, :string
     has_many :entries, Entry

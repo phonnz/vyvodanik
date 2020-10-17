@@ -6,7 +6,8 @@ defmodule Vyvodanik.Blogs do
   import Ecto.Query, warn: false
   alias Vyvodanik.Repo
 
-  alias Vyvodanik.Blogs.Entry
+  alias Vyvodanik.Blogs.{Entry, Category}
+
 
   @doc """
   Returns the list of entries.
@@ -18,7 +19,8 @@ defmodule Vyvodanik.Blogs do
 
   """
   def list_entries do
-    Repo.all(Entry)
+    Entry
+    |> Repo.all
   end
 
   @doc """
@@ -50,9 +52,11 @@ defmodule Vyvodanik.Blogs do
 
   """
   def create_entry(attrs \\ %{}) do
-    %Entry{}
-    |> Entry.changeset(attrs)
-    |> Repo.insert()
+    attrs["category_id"]
+    |> get_category!
+    |> Ecto.build_assoc(:entries)
+    |> change_entry(attrs)
+    |> Repo.insert
   end
 
   @doc """
@@ -101,8 +105,6 @@ defmodule Vyvodanik.Blogs do
   def change_entry(%Entry{} = entry, attrs \\ %{}) do
     Entry.changeset(entry, attrs)
   end
-
-  alias Vyvodanik.Blogs.Category
 
   @doc """
   Returns the list of categories.

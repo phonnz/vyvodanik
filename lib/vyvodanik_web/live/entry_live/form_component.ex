@@ -3,14 +3,17 @@ defmodule VyvodanikWeb.EntryLive.FormComponent do
 
   alias Vyvodanik.Blogs
 
+
   @impl true
   def update(%{entry: entry} = assigns, socket) do
     changeset = Blogs.change_entry(entry)
+    categories = Blogs.list_categories()
 
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(:categories, categories)}
   end
 
   @impl true

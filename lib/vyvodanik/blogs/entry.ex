@@ -7,7 +7,7 @@ defmodule Vyvodanik.Blogs.Entry do
   schema "entries" do
     field :content, :string
     field :title, :string
-    belongs_to :category, Category
+    belongs_to :category, Category, foreign_key: :category_id, type: :binary_id
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule Vyvodanik.Blogs.Entry do
   def changeset(entry, attrs) do
     entry
     |> cast(attrs, [:title, :content])
-    # |> Ecto.assoc()
+    |> cast_assoc(:category)
     |> validate_required([:title, :content])
   end
 end

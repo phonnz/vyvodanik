@@ -6,7 +6,9 @@ defmodule VyvodanikWeb.EntryLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :entries, list_entries())}
+    {:ok,
+    socket
+    |> assign(%{entries: list_entries() } )}
   end
 
   @impl true
