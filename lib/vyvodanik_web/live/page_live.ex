@@ -1,9 +1,13 @@
 defmodule VyvodanikWeb.PageLive do
   use VyvodanikWeb, :live_view
 
+  alias Vyvodanik.Blogs
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+    {:ok,
+    socket
+    |> assign(%{entries: Blogs.list_entries() })}
   end
 
   @impl true
