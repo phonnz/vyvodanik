@@ -2,9 +2,12 @@ defmodule Vyvodanik.Blogs.Category do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Vyvodanik.Blogs.Entry
+
   @primary_key {:id, :binary_id, primary_key: true}
   schema "categories" do
     field :name, :string
+    has_many :entries, Entry
 
     timestamps()
   end
