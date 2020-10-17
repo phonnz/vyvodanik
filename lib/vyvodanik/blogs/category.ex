@@ -2,6 +2,7 @@ defmodule Vyvodanik.Blogs.Category do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :binary_id, primary_key: true}
   schema "categories" do
     field :name, :string
 
