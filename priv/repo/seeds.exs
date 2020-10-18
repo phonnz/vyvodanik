@@ -18,3 +18,7 @@ alias Vyvodanik.Blogs.Category
 
 %Category{:name => "Coding"}
 |> Repo.insert!
+
+
+%Category{:name => "Mate"}
+|> Repo.insert!
