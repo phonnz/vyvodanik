@@ -20,6 +20,7 @@ defmodule Vyvodanik.Blogs do
   """
   def list_entries do
     Entry
+    |> preload(:category)
     |> Repo.all
   end
 
