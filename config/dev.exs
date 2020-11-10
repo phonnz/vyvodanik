@@ -16,7 +16,7 @@ config :vyvodanik, Vyvodanik.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :vyvodanik, VyvodanikWeb.Endpoint,
-  http: [port: 4100],
+  http: [port: 4101],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

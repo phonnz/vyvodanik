@@ -1,5 +1,9 @@
 /* This file is for your main application css. */
-@import "./semantic.superhero.min.css";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
 
 /* LiveView specific classes for your customizations */

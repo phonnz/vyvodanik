@@ -2,42 +2,35 @@ defmodule VyvodanikWeb.PageLive do
   use VyvodanikWeb, :live_view
 
   alias Vyvodanik.Blogs
+  alias Vyvodanik.Blogs.Counters
 
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
     socket
-    |> assign(%{entries: Blogs.list_entries() })}
+    |> assign(%{
+        entries: Blogs.list_entries(),
+        counters: list_counters() })}
   end
 
   @impl true
-  def handle_event("suggest", %{"q" => query}, socket) do
-    {:noreply, assign(socket, results: search(query), query: query)}
+  def handle_event("inc", %{"value" => name}, socket) do
+    counters = socket.assigns.counters |> Counters.inc_count(name)
+    {:noreply, assign(socket, counters: counters )}
   end
 
   @impl true
-  def handle_event("search", %{"q" => query}, socket) do
-    case search(query) do
-      %{^query => vsn} ->
-        {:noreply, redirect(socket, external: "https://hexdocs.pm/#{query}/#{vsn}")}
+  def handle_event("dec", %{"value" => name}, socket) do
 
-      _ ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "No dependencies found matching \"#{query}\"")
-         |> assign(results: %{}, query: query)}
-    end
+    {:noreply, assign(socket, counters: socket.assigns.counters |> Counters.dec_count(name) )}
   end
 
-  defp search(query) do
-    if not VyvodanikWeb.Endpoint.config(:code_reloader) do
-      raise "action disabled when not in development"
-    end
+  @impl true
+  def handle_event("add-counter", _, socket) do
+    {:noreply, assign(socket, %{counters: socket.assigns.counters |> Counters.add_counter})}
+  end
 
-    for {app, desc, vsn} <- Application.started_applications(),
-        app = to_string(app),
-        String.starts_with?(app, query) and not List.starts_with?(desc, ~c"ERTS"),
-        into: %{},
-        do: {app, vsn}
+  def list_counters do
+    Counters.new()
   end
 end

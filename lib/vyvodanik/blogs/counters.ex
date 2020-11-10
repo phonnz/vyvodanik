@@ -18,5 +18,13 @@ defmodule Vyvodanik.Blogs.Counters do
       _e -> "1"
   end
 
-  # def inc(counter, count), do:
+  def inc_count(counters, name) do
+    counters
+    |> Map.put(name, Map.fetch!(counters, name) + 1)
+  end
+
+  def dec_count(counters, name) do
+    counters
+    |> Map.put(name, Map.fetch!(counters, name) - 1)
+  end
 end

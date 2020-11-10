@@ -8,7 +8,7 @@ defmodule VyvodanikWeb.EntryLive.FormComponent do
   def update(%{entry: entry} = assigns, socket) do
     changeset = Blogs.change_entry(entry)
     categories = Blogs.list_categories()
-
+    IO.inspect(changeset.data)
     {:ok,
      socket
      |> assign(assigns)
@@ -18,6 +18,7 @@ defmodule VyvodanikWeb.EntryLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"entry" => entry_params}, socket) do
+    IO.inspect(entry_params)
     changeset =
       socket.assigns.entry
       |> Blogs.change_entry(entry_params)
@@ -27,10 +28,13 @@ defmodule VyvodanikWeb.EntryLive.FormComponent do
   end
 
   def handle_event("save", %{"entry" => entry_params}, socket) do
+    IO.inspect("save")
     save_entry(socket, socket.assigns.action, entry_params)
   end
 
   defp save_entry(socket, :edit, entry_params) do
+
+    IO.inspect(entry_params)
     case Blogs.update_entry(socket.assigns.entry, entry_params) do
       {:ok, _entry} ->
         {:noreply,
